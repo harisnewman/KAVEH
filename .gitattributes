@@ -1,0 +1,15 @@
+# Unity: متن‌ها با LF
+* text=auto
+*.cs text diff=csharp
+*.meta text
+*.unity text merge=unityyamlmerge eol=lf
+*.prefab text merge=unityyamlmerge eol=lf
+*.asset text merge=unityyamlmerge eol=lf
+*.json text
+*.md text
+# تصاویر و صدا باینری
+*.png binary
+*.jpg binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
