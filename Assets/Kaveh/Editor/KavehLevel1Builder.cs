@@ -76,10 +76,15 @@ namespace Kaveh.EditorTools
         /// <summary>محتوای مرحله ۱ را به صحنه فعلی اضافه می‌کند.</summary>
         public static void Populate()
         {
-            // پس‌زمینه
+            // پس‌زمینه ثابت (بدون تکرار)؛ پایین تصویر ۱.۵ واحد زیر سطح زمین
+            var bgSprite = Load("Assets/Art/Backgrounds/level1.jpg");
             var bgGo = new GameObject("Background");
-            var bg = bgGo.AddComponent<BackgroundParallax>();
-            bg.sprite = Load("Assets/Art/Backgrounds/level1.jpg");
+            var bg = bgGo.AddComponent<LevelBackground>();
+            bg.sprite = bgSprite;
+            bg.worldHeight = 10f;
+            bg.bottomY = GroundTopY - 1.5f;
+            float bgWidth = bgSprite != null ? bg.worldHeight * bgSprite.bounds.size.x / bgSprite.bounds.size.y : 17.9f;
+            float right = bgWidth * 0.5f;
 
             var root = new GameObject("Level1").transform;
             var flies = new GameObject("Flies").transform; flies.SetParent(root, false);
@@ -87,13 +92,13 @@ namespace Kaveh.EditorTools
 
             // سطل زباله (آبجکت مستقل)
             var binPrefab = MakePrefab<TrashBin>("TrashBin", PropsDir + "/TrashBins/bin_01.png", 5, true);
-            var bin = Place(binPrefab, root, new Vector2(5f, GroundTopY), "TrashBin");
+            var bin = Place(binPrefab, root, new Vector2(right - 1.7f, GroundTopY), "TrashBin");
 
             // مگس‌ها: هرکدام آبجکت مستقل، همه دور سطل
             for (int i = 1; i <= 8; i++)
             {
                 var fp = MakePrefab<Fly>("Fly_" + i.ToString("00"), PropsDir + "/Flies/fly_" + i.ToString("00") + ".png", 6, false);
-                var f = Place(fp, flies, new Vector2(5f, GroundTopY + 1f));
+                var f = Place(fp, flies, new Vector2(right - 1.7f, GroundTopY + 1f));
                 if (f == null) continue;
                 var fly = f.GetComponent<Fly>();
                 if (bin != null) fly.center = bin.transform;
@@ -105,9 +110,9 @@ namespace Kaveh.EditorTools
             }
 
             // موش‌ها: هرکدام آبجکت مستقل و با محدوده گشت جدا
-            float[] rx = { 8.5f, 12f, 3f };
-            float[] half = { 1.8f, 2.4f, 1.2f };
-            float[] spd = { 1.1f, 1.5f, 0.9f };
+            float[] rx = { -2f, 4.8f, -4.8f };
+            float[] half = { 1.8f, 1.2f, 0.9f };
+            float[] spd = { 1.3f, 1.7f, 1.1f };
             for (int i = 1; i <= 3; i++)
             {
                 var rp = MakePrefab<Rat>("Rat_" + i.ToString("00"), PropsDir + "/Rats/rat_" + i.ToString("00") + ".png", 5, true);
@@ -122,9 +127,9 @@ namespace Kaveh.EditorTools
             // تکه نان و خرده‌هایش
             var breadPrefab = MakePrefab<BreadPiece>("BreadPiece", PropsDir + "/Bread/bread_slice.png", 5, true,
                 b => { b.itemId = "bread"; b.displayName = "نان"; });
-            Place(breadPrefab, root, new Vector2(7f, GroundTopY - 0.05f), "BreadPiece");
+            Place(breadPrefab, root, new Vector2(1.4f, GroundTopY - 0.05f), "BreadPiece");
             var crumbsPrefab = MakePrefab<KavehInteractable>("BreadCrumbs", PropsDir + "/Bread/crumbs.png", 4, false);
-            Place(crumbsPrefab, root, new Vector2(7.5f, GroundTopY - 0.1f), "BreadCrumbs");
+            Place(crumbsPrefab, root, new Vector2(1.95f, GroundTopY - 0.1f), "BreadCrumbs");
 
             // تنظیم بوت‌استرپ: زمین نامرئی روی خیابان پس‌زمینه
 #if UNITY_2023_1_OR_NEWER
@@ -136,6 +141,7 @@ namespace Kaveh.EditorTools
             {
                 boot.groundTopY = GroundTopY;
                 boot.showGround = false;
+                boot.spawnX = -right + 2.2f;
             }
         }
     }

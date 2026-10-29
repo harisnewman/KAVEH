@@ -13,7 +13,7 @@ namespace Kaveh
         [Tooltip("از اسکلت قطعه‌قطعه (Resources/Kaveh/Rig) و انیمیشن راه رفتن استفاده کن. اگر قطعات نبود، به اسپرایت ساده برمی‌گردد.")]
         public bool useRig = true;
         [Tooltip("فاصله‌ای که کاوه در یک چرخه کامل راه رفتن (دو قدم) طی می‌کند، به واحد دنیا")]
-        public float strideCycleLength = 1.5f;
+        public float strideCycleLength = 1.55f;
         [Tooltip("ارتفاع کاوه در دنیای بازی (واحد Unity)")]
         public float visualHeight = 1.8f;
         public Color tint = Color.white;
@@ -25,8 +25,8 @@ namespace Kaveh
         public bool spriteFacesRight = true;
 
         [Header("Movement")]
-        public float walkSpeed = 2f;
-        public float acceleration = 25f;
+        public float walkSpeed = 3.4f;
+        public float acceleration = 40f;
         public float gravityScale = 3f;
 
         [Header("Collider")]

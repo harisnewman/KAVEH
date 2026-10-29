@@ -20,6 +20,13 @@ Prefabها در `Assets/Level1/Prefabs`.
 - تنظیم‌ها در `KavehConfig`: `strideCycleLength` (طول گام‌ها)، `walkSpeed`، `visualHeight`.
 - اگر قطعات موجود نباشند، خودکار به اسپرایت ساده برمی‌گردد.
 
+## پس‌زمینه و دوربین
+- پس‌زمینه یک تصویر ثابت است و تکرار نمی‌شود؛ کل مرحله همان تصویر است.
+- دوربین کمی زوم می‌کند (`viewFraction` در `LevelBackground`) و فقط در محدوده تصویر حرکت می‌کند.
+- کاوه با دو دیوار نامرئی لبه‌های تصویر نگه داشته می‌شود.
+- آبجکت‌ها (سطل، موش‌ها، نان) در مختصات دنیا ثابت‌اند و با تصویر حرکت نمی‌کنند.
+- بعد از تغییر این کدها، در Unity از منو `KAVEH > Rebuild Main Scene` را بزنید.
+
 ## برداشتن و کوله‌پشتی
 - نزدیک نان که شوی، علامت دست بالای آن می‌آید. روی دست بزن: کاوه دست دراز می‌کند و نان داخل کوله می‌رود.
 - روی خود کاوه بزن تا محتوای کوله‌پشتی باز شود؛ دوباره بزن (یا جای دیگر) تا بسته شود.
@@ -35,7 +42,7 @@ Prefabها در `Assets/Level1/Prefabs`.
 
 ## ساختار
 - `Assets/Kaveh/Scripts` : کاوه (Config, Visual, Controller, Input, Bootstrap)
-- `Assets/Level1/Scripts` : Fly, Rat, TrashBin, BreadPiece, BackgroundParallax, KavehInteractable
+- `Assets/Level1/Scripts` : Fly, Rat, TrashBin, BreadPiece, LevelBackground, KavehInteractable
 - `Assets/Kaveh/Editor` : ساخت خودکار صحنه و ایمپورت تصاویر
 - `Assets/Art/Props` : همه تصاویر جدا شده (۴ سطل، ۱۷ مگس، موش‌ها، نان‌ها، موارد اضافه در Extras)
 - `Assets/Art/Backgrounds/level1.jpg` : پس‌زمینه مرحله
