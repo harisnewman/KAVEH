@@ -59,7 +59,7 @@ namespace Kaveh.EditorTools
 
             Directory.CreateDirectory(PrefabDir);
             var prefab = PrefabUtility.SaveAsPrefabAsset(go, PrefabDir + "/" + name + ".prefab");
-            Object.DestroyImmediate(go);
+            UnityEngine.Object.DestroyImmediate(go);
             return prefab;
         }
 
@@ -128,9 +128,9 @@ namespace Kaveh.EditorTools
 
             // تنظیم بوت‌استرپ: زمین نامرئی روی خیابان پس‌زمینه
 #if UNITY_2023_1_OR_NEWER
-            var boot = Object.FindFirstObjectByType<KavehGameBootstrap>();
+            var boot = UnityEngine.Object.FindFirstObjectByType<KavehGameBootstrap>();
 #else
-            var boot = Object.FindObjectOfType<KavehGameBootstrap>();
+            var boot = UnityEngine.Object.FindObjectOfType<KavehGameBootstrap>();
 #endif
             if (boot != null)
             {
