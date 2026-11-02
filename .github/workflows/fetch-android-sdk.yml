@@ -1,0 +1,36 @@
+name: Fetch Android SDK files
+
+# برای کسانی که به dl.google.com دسترسی ندارند:
+# این workflow فایل‌های SDK را روی سرور GitHub دانلود و به صورت یک فایل زیپ (Artifact) می‌دهد.
+# اجرا: Actions > Fetch Android SDK files > Run workflow ، بعد Artifact را دانلود کنید.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download files
+        run: |
+          mkdir -p out
+          BASE=https://dl.google.com/android/repository
+          for f in \
+            build-tools_r30.0.3-windows.zip \
+            platform-tools-latest-windows.zip \
+            platform-30_r03.zip \
+            platform-31_r01.zip ; do
+            echo "== $f"
+            if curl -fL --retry 3 -o "out/$f" "$BASE/$f"; then
+              ls -la "out/$f"
+            else
+              echo "FAILED: $f" | tee -a out/FAILED.txt
+            fi
+          done
+          ls -la out
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-sdk-files
+          path: out/

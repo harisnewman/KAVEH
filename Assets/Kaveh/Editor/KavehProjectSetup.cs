@@ -37,8 +37,27 @@ namespace Kaveh.EditorTools
         }
 
         [MenuItem("KAVEH/Rebuild Main Scene")]
+        static void RebuildFromMenu()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                EditorUtility.DisplayDialog("KAVEH", "اول Play را متوقف کنید، بعد دوباره امتحان کنید.", "باشه");
+                return;
+            }
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            CreateScene();
+        }
+
+        [MenuItem("KAVEH/Rebuild Main Scene", true)]
+        static bool RebuildFromMenuValidate()
+        {
+            return !EditorApplication.isPlayingOrWillChangePlaymode;
+        }
+
         static void CreateScene()
         {
+            if (EditorApplication.isPlayingOrWillChangePlaymode) return;
+
             KavehLevel1Builder.EnsureImports();
 
             Directory.CreateDirectory("Assets/Scenes");
